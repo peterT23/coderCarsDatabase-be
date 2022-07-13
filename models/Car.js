@@ -39,21 +39,21 @@ const carSchema = new mongoose.Schema(
 	}
 );
 
-// carSchema.pre(/^find/, function (next) {
-// 	if (!('_conditions' in this)) return next();
-// 	if (!('isDeleted' in carSchema.paths)) {
-// 		delete this['_conditions']['all'];
-// 		return next();
-// 	}
-// 	if (!('all' in this['_conditions'])) {
-// 		//@ts-ignore
-// 		this['_conditions'].isDeleted = false;
-// 	} else {
-// 		delete this['_conditions']['all'];
-// 	}
-// 	next();
-// });
+carSchema.pre(/^find/, function (next) {
+	if (!('_conditions' in this)) return next();
+	if (!('isDeleted' in carSchema.paths)) {
+		delete this['_conditions']['all'];
+		return next();
+	}
+	if (!('all' in this['_conditions'])) {
+		//@ts-ignore
+		this['_conditions'].isDeleted = false;
+	} else {
+		delete this['_conditions']['all'];
+	}
+	next();
+});
 
-const Car = mongoose.model('Cars', carSchema);
+const Car = mongoose.model('Car', carSchema);
 
 module.exports = Car;
